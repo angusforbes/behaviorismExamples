@@ -1,0 +1,1 @@
+behaviorismExamples contains a number of simple projects which make use of various functionalities of the behaviorism framework. It will be maintained to keep pace with the latest version of the behaviorism project.
