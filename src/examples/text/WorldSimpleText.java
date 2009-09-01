@@ -35,11 +35,13 @@ public class WorldSimpleText extends World
   public void simpleTextDemo()
   {
     long startTime = Utils.nowPlusMillis(500L);
-    for (int i = 0; i < 75; i++)
+    for (int i = 0; i < 100; i++)
     {
       GeomSimpleText g = new GeomSimpleText(
-        false,
-        Utils.randomInt(-100, 300), Utils.randomInt(-100, 300),
+        true,
+        //Utils.randomInt(-100, 300), Utils.randomInt(-100, 300),
+        Utils.randomInt(-50, Behaviorism.getInstance().canvasWidth), 
+        Utils.randomInt(-50, Behaviorism.getInstance().canvasHeight),
         Utils.randomString(1,3), "Arial", Font.PLAIN, 72f);
 
       //      g.setMargins(1f, 0f, 2f, 0f);
@@ -55,7 +57,7 @@ public class WorldSimpleText extends World
       g.getState().BLEND = true;
       g.getState().DEPTH_TEST = true;
 
-      addGeom(g, startTime, 0L + (i * 100L));
+      addGeom(g, startTime, 0L + (i * 50L));
 
       /*
       BehaviorRotate.rotate(g,

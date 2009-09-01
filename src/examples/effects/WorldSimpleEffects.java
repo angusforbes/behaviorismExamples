@@ -27,7 +27,7 @@ public class WorldSimpleEffects extends World
     gr.setColor(1f,1f,1f,1f);
     addGeom(gr);
 
-    EffectUtils.effectZoomIn(gr, Utils.nowPlusMillis(5000L), 4000L, false);
+    EffectUtils.effectZoomIn(gr, Utils.nowPlusMillis(1000L), 4000L, false);
 
 
 

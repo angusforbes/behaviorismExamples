@@ -76,6 +76,7 @@ public class WorldSimpleEasing extends World
       scaleGeoms[i].setColor(0f,0f,1f,.6f);
       
       colorGeoms[i] = new GeomRect(-2.65f, (stY + incY * i) -.125f, 0f, .25f, .25f);
+      colorGeoms[i].getState().BLEND = true;
       addGeom(colorGeoms[i]);
       colorGeoms[i].setColor(1f,1f,1f,.1f);
     }

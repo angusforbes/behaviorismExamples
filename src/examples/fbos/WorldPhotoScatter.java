@@ -5,6 +5,8 @@ import behaviorism.geometry.Colorf;
 import behaviorism.geometry.Geom;
 import behaviorism.geometry.GeomRect;
 import behaviorism.geometry.media.GeomImage;
+import behaviorism.geometry.media.GeomVideo;
+import behaviorism.textures.Texture;
 import behaviorism.textures.TextureImage;
 import behaviorism.textures.TextureManager;
 import behaviorism.textures.TextureVideo;
@@ -40,6 +42,7 @@ public class WorldPhotoScatter extends World
 
   public void setUpWorld()
   {
+    
     log.entry("in setUpWorld()");
     //setColor(1f,1f,1f,1f);
     setColor(0f, 0f, 0f, 1f);
@@ -53,18 +56,32 @@ public class WorldPhotoScatter extends World
     rw = r2df.width;
     rh = r2df.height;
 
-    //TextureImage ti = loadOnePhoto();
-    TextureVideo ti = new TextureVideo(FileUtils.toURI("data/videos/sheep.mov"), true);
+    try
+    {
+
+    //Texture ti = loadOnePhoto();
+    Texture ti = new TextureVideo(FileUtils.toURI("data/videos/sheep.mov"), true);
     //TextureVideo ti = new TextureVideo(FileUtils.toURI("data/videos/mitchell.flv"), true);
 
     log.debugObject("TextureImage ti " , ti);
     TextureManager.getInstance().addTexture(ti);
 
-    //Utils.sleep(5000);
-    
+//    while (ti.texture == null)
+//    {
+//      Utils.sleep(100);
+//      System.err.println("sleeping...");
+//    }
+
+
+      System.err.println("canvas w/h = " + Behaviorism.getInstance().canvasWidth + "/" + Behaviorism.getInstance().canvasHeight);
     testVideoScatterPHOTO(
       Behaviorism.getInstance().canvasWidth / 1, Behaviorism.getInstance().canvasHeight / 1,
       ti);
+    }
+    catch(Exception e)
+    {
+      e.printStackTrace();
+    }
     log.exit("out setUpWorld()");
   }
 
@@ -75,16 +92,27 @@ public class WorldPhotoScatter extends World
     return images.get(0);
   }
 
-  public Geom testVideoScatterPHOTO(int fboW, int fboH, TextureImage ti)
+  public Geom testVideoScatterPHOTO(int fboW, int fboH, Texture ti)
   {
     log.entry("in testVideoScatterPHOTO()");
     List<Geom> lights = new ArrayList<Geom>();
 
-    GeomImage testImage = new GeomImage(new Point3f(), 1f, 1f, ti);
-    addGeom(testImage);
+//    GeomImage testImage = new GeomImage(new Point3f(), 1f, 1f, ti);
+//    addGeom(testImage);
     
     log.debug("making GeomImage from Texture to be used as light source.");
-      GeomImage image = new GeomImage(new Point3f(-.25f, -.25f, 1f), rw, rh, ti);
+    Geom image;
+    System.err.println("ti is a " + ti.getClass());
+    if (ti instanceof TextureVideo)
+    {
+      System.err.println("ti is TextureVideo");
+      image = new GeomVideo(new Point3f(-.25f, -.25f, 1f), rw, rh, (TextureVideo) ti);
+    }
+    else
+    {
+      System.err.println("ti is TextureImage");
+      image = new GeomImage(new Point3f(-.25f, -.25f, 1f), rw, rh, (TextureImage) ti);
+    }
       //image.setColor(new Colorf(0f, .3f, 1f, 1f).invert());
       image.setColor(new Colorf(0f, 0f, 0f, 1f).invert()); //for forest
       //image.setColor(new Colorf(1f, 1f, 1f, 1f).invert());
@@ -106,7 +134,10 @@ public class WorldPhotoScatter extends World
     log.debug("making FBO");
     TextureFBOScatter fboScatter = new TextureFBOScatter(fboW, fboH,
       lights, occluders, -10L);
+    System.err.println("before added a TextureFBOScatter to the TextureManager... " + TextureManager.getInstance().numActiveTextures());
     TextureManager.getInstance().addTexture(fboScatter);
+    System.err.println("after added a TextureFBOScatter to the TextureManager... " + TextureManager.getInstance().numActiveTextures());
+
 
     GeomPhotoScatterFBO geomScatter = new GeomPhotoScatterFBO(new Point3f(rx, ry, 0f), rw, rh, fboScatter, false);
     geomScatter.setColor(1f, 1f, 1f, 1f);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- You may freely edit this file. See commented blocks below for -->
 <!-- some examples of how to customize the build. -->
-<project name="bex" default="default" basedir=".">
+<project name="behaviorismExamples" default="default" basedir=".">
     <description>Builds, tests, and runs the project bex.</description>
     <import file="nbproject/build-impl.xml"/>
     <import file="nbproject/build-jogl-template-impl.xml"/>

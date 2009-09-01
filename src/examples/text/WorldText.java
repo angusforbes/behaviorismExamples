@@ -184,7 +184,7 @@ public class WorldText extends World
       exactBounds(true).
       exactPadding(0, 0).
       //percentagePadding(.5f, 0f).
-      backgroundColor(new Colorf(0f, 1f, 0f, 1f)).
+      //backgroundColor(new Colorf(0f, 1f, 0f, 1f)).
       textColor(new Colorf(0f, 0f, 1f, 1f));
 
     Geom g = gtb.justify(1, 1).anchor(-100, 0, false).

@@ -68,6 +68,7 @@ public class GeomPhotoScatterFBO extends GeomRect
     //if (this.textures.get(0).texture == null)
     if (ti.texture == null)
     {
+     // System.err.println("texture is null!");
       log.debug("in GeomPhotoScatterFBO.draw() : texture is null");
       return;
     }
