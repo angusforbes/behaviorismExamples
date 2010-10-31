@@ -3,6 +3,7 @@ package examples.text;
 import behaviorism.Behaviorism;
 import behaviorism.geometry.Colorf;
 import behaviorism.geometry.text.GeomSimpleText;
+import behaviorism.utils.RenderUtils;
 import behaviorism.utils.Utils;
 import behaviorism.worlds.World;
 import java.awt.Font;
@@ -35,13 +36,18 @@ public class WorldSimpleText extends World
   public void simpleTextDemo()
   {
     long startTime = Utils.nowPlusMillis(500L);
+
+
+    int www =  RenderUtils.getViewport()[2];
+    int hhh =  RenderUtils.getViewport()[3];
     for (int i = 0; i < 100; i++)
     {
       GeomSimpleText g = new GeomSimpleText(
         true,
         //Utils.randomInt(-100, 300), Utils.randomInt(-100, 300),
-        Utils.randomInt(-50, Behaviorism.getInstance().canvasWidth), 
-        Utils.randomInt(-50, Behaviorism.getInstance().canvasHeight),
+
+        Utils.randomInt(-50, www),
+        Utils.randomInt(-50, hhh),
         Utils.randomString(1,3), "Arial", Font.PLAIN, 72f);
 
       //      g.setMargins(1f, 0f, 2f, 0f);

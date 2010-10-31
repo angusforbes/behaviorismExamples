@@ -11,14 +11,15 @@ import behaviorism.textures.TextureImage;
 import behaviorism.textures.TextureManager;
 import behaviorism.textures.TextureVideo;
 import behaviorism.utils.FileUtils;
+import behaviorism.utils.RenderUtils;
 import behaviorism.utils.Utils;
 import behaviorism.worlds.World;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
+import javax.swing.JApplet;
 import javax.vecmath.Point3f;
 import org.grlea.log.SimpleLogger;
 
@@ -40,9 +41,59 @@ public class WorldPhotoScatter extends World
     Behaviorism.installWorld(world, properties);
   }
 
+  public WorldPhotoScatter()
+  {}
+
+  public WorldPhotoScatter(JApplet applet)
+  {
+   Properties properties = loadPropertiesFileFromJarFile("scatter.properties");
+   Behaviorism.installWorld(this, properties, applet);
+  }
+
+   public Properties initProperties(String whichVersion)
+  {
+//    System.err.println("in initProperties : which = " + whichVersion);
+//    this.which = whichVersion;
+//
+//    Properties properties = null;
+//    try
+//    {
+//      homeDir = FileUtils.getUserDirectoryName() + "/BinPackPhotoShanghai/" + which;
+//      PHOTO_FOLDER_A = FileUtils.toCrossPlatformFilename(homeDir + "/photos/A/");
+//      PHOTO_FOLDER_B = FileUtils.toCrossPlatformFilename(homeDir + "/photos/B/");
+//
+//      //we are going to try to load the properties file from the user directory first
+//
+//      properties = loadPropertiesFile(
+//        FileUtils.getUserDirectoryName() + "/BinPackPhotoShanghai/" + which + "/binPackPhoto.properties");
+//    }
+//    catch (AccessControlException ace)
+//    {
+//      ace.printStackTrace();
+//      System.err.println("We don't have permission to look at your file system.");
+//    }
+//
+//    if (properties == null)
+//    {
+//      //then try to load it from the JAR
+//      String propName = "/" + which + "/" + which + ".properties";
+//      System.err.println("checking fileName = " + propName);
+//
+//      properties = loadPropertiesFileFromJarFile(propName);
+//    }
+//
+//    if (properties == null)
+//    {
+//      System.err.println("Why is properties still NULL????");
+//    }
+
+ //   return properties;
+    return null;
+  }
+
   public void setUpWorld()
   {
-    
+    System.err.println("in setUpWorld() : cam is : " + RenderUtils.getCamera() );
     log.entry("in setUpWorld()");
     //setColor(1f,1f,1f,1f);
     setColor(0f, 0f, 0f, 1f);
@@ -50,17 +101,31 @@ public class WorldPhotoScatter extends World
     getState().DEPTH_TEST = true;
     getState().BLEND = false;
 
-    Rectangle2D.Float r2df = getScreenBoundsInWorldCoords();
-    rx = r2df.x;
-    ry = r2df.y;
-    rw = r2df.width;
-    rh = r2df.height;
+    RenderUtils.getRenderer().setBoundaries();
 
+    Rectangle2D.Float r2df = getScreenBoundsInWorldCoords();
+
+    if (r2df == null)
+    {
+      System.err.println(" r2df is NULLLLLL!!!!! ");
+      rx = -2f;
+      ry = -2f;
+      rw = 4f;
+      rh = 4f;
+    }
+    else
+    {
+      System.err.println("OKKKKKKKKK!!");
+      rx = r2df.x;
+      ry = r2df.y;
+      rw = r2df.width;
+      rh = r2df.height;
+    }
     try
     {
 
-    //Texture ti = loadOnePhoto();
-    Texture ti = new TextureVideo(FileUtils.toURI("data/videos/sheep.mov"), true);
+    Texture ti = loadOnePhoto();
+    //Texture ti = new TextureVideo(FileUtils.toURI("data/videos/sheep.mov"), true);
     //TextureVideo ti = new TextureVideo(FileUtils.toURI("data/videos/mitchell.flv"), true);
 
     log.debugObject("TextureImage ti " , ti);
@@ -73,10 +138,16 @@ public class WorldPhotoScatter extends World
 //    }
 
 
-      System.err.println("canvas w/h = " + Behaviorism.getInstance().canvasWidth + "/" + Behaviorism.getInstance().canvasHeight);
+    int www =  RenderUtils.getViewport()[2];
+    int hhh =  RenderUtils.getViewport()[3];
+
+      /*System.err.println("canvas w/h = " + Behaviorism.getInstance().canvasWidth + "/" + Behaviorism.getInstance().canvasHeight);
     testVideoScatterPHOTO(
       Behaviorism.getInstance().canvasWidth / 1, Behaviorism.getInstance().canvasHeight / 1,
       ti);
+       */
+      System.err.println("about to call testVideoScatterPHOTO : real canvas w/h = " + www + "/" + hhh);
+      testVideoScatterPHOTO(www / 1, hhh / 1, ti);
     }
     catch(Exception e)
     {
@@ -87,9 +158,27 @@ public class WorldPhotoScatter extends World
 
   public TextureImage loadOnePhoto()
   {
-    List<TextureImage> images = FileUtils.loadTexturesFromDirectory("data/photos/historical/", 10); //cols * rows
-    Collections.shuffle(images);
-    return images.get(0);
+    List<String> files = null;
+    try
+    {
+      List<TextureImage> images = FileUtils.loadTexturesFromDirectory("resources/data/photos/historical/", 3); //cols * rows
+
+      TextureImage ti = images.get(0);
+      TextureManager.getInstance().addTexture(ti);
+
+      return ti;
+ 
+//      files = JarUtils.getResourceListing(getClass(), "resources/data/photos/historical/");
+//      InputStream is = JarUtils.getInputStreamFromJar(files.get(Utils.randomInt(0, files.size() - 1)));
+//      TextureImage ti = new TextureImage(is);
+//      return ti;
+    }
+    catch(Exception e)
+    {
+      e.printStackTrace();
+    }
+    
+    return null;
   }
 
   public Geom testVideoScatterPHOTO(int fboW, int fboH, Texture ti)
@@ -131,7 +220,8 @@ public class WorldPhotoScatter extends World
     List<Geom> occluders = new ArrayList<Geom>();
     // occluders.add(occ);
 
-    log.debug("making FBO");
+    //log.debug("making FBO : calling TextureFBOScatter with fboW/H = " + fboW + "/" + fboH);
+    System.err.println("making FBO : calling TextureFBOScatter with fboW/H = " + fboW + "/" + fboH);
     TextureFBOScatter fboScatter = new TextureFBOScatter(fboW, fboH,
       lights, occluders, -10L);
     System.err.println("before added a TextureFBOScatter to the TextureManager... " + TextureManager.getInstance().numActiveTextures());
@@ -147,6 +237,9 @@ public class WorldPhotoScatter extends World
       geomScatter.addGeom(light);
     }
 
+
+    BehaviorScatterLightPos.changeLightPos(geomScatter, Utils.now(), 5000L, .6f, 0f);
+    BehaviorScatterLightPos.changeLightPos2(geomScatter, Utils.nowPlusMillis(10000L), 7000L, 0f, .5f);
 
     addGeom(geomScatter);
 

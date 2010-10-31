@@ -1,7 +1,7 @@
 /* GeomScatter.java ~ Jun 2, 2009 */
 package examples.fbos;
 
-import behaviorism.Behaviorism;
+import behaviorism.geometry.Geom;
 import behaviorism.geometry.GeomRect;
 import behaviorism.handlers.MouseHandler;
 import behaviorism.shaders.FragmentShader;
@@ -27,7 +27,7 @@ public class GeomPhotoScatterFBO extends GeomRect
   int[] fboTextureId = new int[1];
   int[] fboId = new int[1];
   boolean fboUsed = false;
-  float OFF_SCREEN_RENDER_RATIO = 1f;
+  //float OFF_SCREEN_RENDER_RATIO = 1f;
   TextureFBOScatter ti;
   boolean renderOrtho = false;
   public float lineWidth = 1f;
@@ -43,8 +43,10 @@ public class GeomPhotoScatterFBO extends GeomRect
     this.ti = ti;
     //attachTexture(ti);
     this.program = new Program(
-      new VertexShader("shaders/scatter.vert"),
-      new FragmentShader("shaders/scatter.frag"));
+      //new VertexShader("shaders/scatter.vert"),
+      //new FragmentShader("shaders/scatter.frag"));
+      new VertexShader("resources/shaders/scatter.vert"),
+      new FragmentShader("resources/shaders/scatter.frag"));
 
     this.renderOrtho = renderOrtho;
   }
@@ -76,8 +78,12 @@ public class GeomPhotoScatterFBO extends GeomRect
     log.debug("in GeomPhotoScatterFBO.draw() : texture is valid");
     ti.applyFBO();
 
-    renderW = Behaviorism.getInstance().canvasWidth;
-    renderH = Behaviorism.getInstance().canvasHeight;
+    renderW =  RenderUtils.getViewport()[2];
+    renderH =  RenderUtils.getViewport()[3];
+
+    //System.out.println("renderW/H = " + renderW + "/" +renderH);
+//    renderW = Behaviorism.getInstance().canvasWidth;
+//    renderH = Behaviorism.getInstance().canvasHeight;
 
     gl.glPushMatrix();
     {
@@ -101,7 +107,7 @@ public class GeomPhotoScatterFBO extends GeomRect
       {
         gl.glMatrixMode(GL_PROJECTION);
         gl.glLoadIdentity();
-        gl.glOrtho(-renderW / 2, renderW / 2, -renderH / 2, renderH / 2, 000, 50000.0);
+        gl.glOrtho(-renderW / 2, renderW / 2, -renderH / 2, renderH / 2, 000, 50000);
         gl.glMatrixMode(GL_MODELVIEW);
         gl.glLoadIdentity();
       }
@@ -191,8 +197,29 @@ public class GeomPhotoScatterFBO extends GeomRect
 
   @Override
   //public void clickAction()
-  public void mouseMovingAction()
+  public void mouseMovingAction(Geom og)
   {
+    //System.err.println("in mouseMovingAction : useLight = " + WorldPhotoScatter.useLight);
+    Point3f mg = MouseHandler.getInstance().mouseGeomPoint;
+    float px = mg.x / this.w;
+    float py = mg.y / this.h;
+// System.out.println("you clicked! (" + mg + ") px/py = " + px + "/" + py);
+    if (WorldPhotoScatter.useLight == 1)
+    {
+      WorldPhotoScatter.light1_x = px;
+      WorldPhotoScatter.light1_y = py;
+    }
+    else if (WorldPhotoScatter.useLight == 2)
+    {
+      WorldPhotoScatter.light2_x = px;
+      WorldPhotoScatter.light2_y = py;
+    }
+  }
+
+  @Override
+  public void clickAction(Geom og)
+  {
+    //System.err.println("in mouseClickAction : useLight = " + WorldPhotoScatter.useLight);
     Point3f mg = MouseHandler.getInstance().mouseGeomPoint;
     float px = mg.x / this.w;
     float py = mg.y / this.h;

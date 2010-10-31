@@ -1,0 +1,6 @@
+Name:Albert Fert
+IsConnectedTo:factGmrDiscovery
+IsConnectedTo:termSpintronics
+IsConnectedTo:playerGrunberg
+
+

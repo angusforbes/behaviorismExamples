@@ -103,6 +103,9 @@ public class TextureFBOScatter extends TextureFBO
             break;
           }
         }
+
+        //hmm i think we need the option to have the light geoms in ortho view too... think about this
+        //i want the fbo to be full screen and stay full screen even after reshapes
         gl.glLoadMatrixd(light.modelview, 0);
         light.draw();
         idx++;

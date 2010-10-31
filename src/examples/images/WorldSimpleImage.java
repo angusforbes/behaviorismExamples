@@ -44,7 +44,7 @@ public class WorldSimpleImage extends World
     //set up grid of photos...
     int cols = 3;
     int rows = 3;
-    List<TextureImage> images = FileUtils.loadTexturesFromDirectory("data/photos/historical/", 3); //cols * rows
+    List<TextureImage> images = FileUtils.loadTexturesFromDirectory("resources/data/photos/historical/", 3); //cols * rows
 
     for (TextureImage image : images)
     {
@@ -69,8 +69,9 @@ public class WorldSimpleImage extends World
 
         GeomImage gi = new GeomImage(anchor, incx, incy, images.get(idx));
 
-        BehaviorLauncher bl = new BehaviorLauncher(nanoPlusMillis(base, 0L, 1000L), gi, images);
-        bl.schedule(true);
+        addGeom(gi);
+       // BehaviorLauncher bl = new BehaviorLauncher(nanoPlusMillis(base, 0L, 1000L), gi, images);
+       // bl.schedule(true);
       }
     }
   }

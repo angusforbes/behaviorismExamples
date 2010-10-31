@@ -33,7 +33,7 @@ public class GeomVideoScrub extends GeomVideo
   @Override
   public void mouseInAction()
   {
-    System.out.println("in GeomVideoScrub : in mouseInAction()");
+    //System.out.println("in GeomVideoScrub : in mouseInAction()");
   }
 
   @Override
@@ -51,50 +51,47 @@ public class GeomVideoScrub extends GeomVideo
   @Override
   public void releaseAction()
   {
-    System.out.println("in GeomVideoScrub : in releaseAction()");
+    //System.out.println("in GeomVideoScrub : in releaseAction()");
      TextureVideo tv = (TextureVideo) getTexture();
-     //tv.setBalance(-1f);
-     //tv.setImageType(tv.getImageType() + 1);
-
   }
 
+  @Override
   public void selectedAction()
   {
-    System.out.println("in GeomVideoScrub : in selectedAction()");
+    //System.out.println("in GeomVideoScrub : in selectedAction()");
   }
 
 
+  @Override
   public void unselectedAction()
   {
-    System.out.println("in GeomVideoScrub : in unselectedAction()");
+    //System.out.println("in GeomVideoScrub : in unselectedAction()");
   }
 
   @Override
   public void pressAction()
   {
      TextureVideo tv = (TextureVideo) getTexture();
-     //tv.setBalance(1f);
-    System.out.println("in GeomVideoScrub : in pressAction()");
-     //tv.setImageType(6);
+    //System.out.println("in GeomVideoScrub : in pressAction()");
   }
 
   @Override
   public void dragAction()
   {
     super.dragAction();
-    System.out.println("in GeomVideoScrub : in dragAction()");
+    //System.out.println("in GeomVideoScrub : in dragAction()");
   }
 
   @Override
   public void clickAction()
   {
-    System.out.println("in GeomVideoScrub : in clickAction()");
+    //System.out.println("in GeomVideoScrub : in clickAction()");
   }
 
   @Override
   public void doubleClickAction()
   {
-    System.out.println("in GeomVideoScrub : in doubleClickAction()");
+    //System.out.println("in GeomVideoScrub : in doubleClickAction()");
   }
 
   @Override
@@ -123,7 +120,7 @@ public class GeomVideoScrub extends GeomVideo
   @Override
   public void mouseMovingAction()
   {
-    System.out.println("in mouseMovingAction");
+    //System.out.println("in mouseMovingAction");
     Point3f p = MouseHandler.getInstance().mouseGeomPoint;
     TextureVideo tv = (TextureVideo) getTexture();
 
@@ -134,97 +131,4 @@ public class GeomVideoScrub extends GeomVideo
     }
   }
 
-  /*
-  @Override
-  public void draw(GL gl)
-  {
-  if (updateTextures())
-  {
-  if (maxSize > 0f)
-  {
-  normalizeSize(getTexture().w, getTexture().h, maxSize);
-  }
-
-  gl.glColor4fv(color.array(), 0);
-  this.textures.get(0).texture.bind();
-  TextureCoords tc = this.textures.get(0).texture.getImageTexCoords();
-
-  gl.glEnable(GL.GL_TEXTURE_2D);
-
-  drawRect(gl, 0f, 0f, 0f, w, h, tc.left(), tc.right(), tc.bottom(), tc.top());
-  gl.glDisable(GL.GL_TEXTURE_2D);
-  }
-  }
-   */
-
-  /*
-  @Override
-  public void doubleClickAction(MouseEvent me)
-  {
-  System.out.println("in GeomVideo: handleDoubleClick");
-  System.out.println("mp.isPlaying = " + mp.isPlaying());
-
-  if (mp.isPlaying() == true)
-  {
-
-  //System.out.println("about to call this.stop!");
-  stopBehavior();
-  this.mp.pause();
-
-  for (int i = 0; i < 1; i++)
-  {
-  //this.mp.setMediaTime(this.mp.getMediaTime() - 3);
-  //this.ac.setVolume(this.ac.getVolume() - .1f);
-  //this.ac.setMute(!this.ac.isMuted());
-  }
-  }
-  else //this.isPlaying == false
-  {
-  System.out.println("about to call this.start!");
-  this.mp.play();
-  mp.setRate(1f);
-
-  startBehavior();
-  }
-
-  }
-
-  public void stopBehavior()
-  {
-  System.out.println("stopping......");
-  stopBehavior = BehaviorScale.scale(Utils.nowPlusMillis(0L), 150L,
-  new Point3f(-2f, -2f, 0f));
-  selectableObject.attachBehavior(stopBehavior);
-  }
-
-  public void startBehavior()
-  {
-  //isPlaying = true;
-
-  startBehavior = BehaviorScale.scale(Utils.nowPlusMillis(0L), 150L,
-  new Point3f(2f, 2f, 0f));
-  selectableObject.attachBehavior(startBehavior);
-
-  startBehavior = BehaviorRotate.rotate(Utils.nowPlusMillis(50L), 350L,
-  new Point3f(0f, 720f, 0f));
-  //selectableObject.attachBehavior(startBehavior);
-  }
-
-  
-  public void normalizeSize(Dimension dim, float size)
-  {
-  int tw = (int) dim.getWidth();
-  int th = (int) dim.getHeight();
-
-  //System.out.println("tw / th = " + tw + "/" + th);
-  if (tw >= th)
-  {
-  normalizeSizeByWidth(tw, th, size);
-  }
-  else
-  {
-  normalizeSizeByHeight(tw, th, size);
-  }
-  }
-   */
 }

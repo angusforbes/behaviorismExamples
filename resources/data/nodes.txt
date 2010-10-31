@@ -1,0 +1,13 @@
+Videos:vidA;vidB;vidC;vidD;vidE;vidF
+Users:user1;user2;user3;user4;
+Comments:commentZ;commentY;commentX;commentW;commentV;commentU;commentT
+
+IsConnectedTo:vidA,user1;vidA,commentZ;vidA,commentY
+IsConnectedTo:vidB,user1;vidB,commentX;vidC,commentW;vidC,commentV
+IsConnectedTo:vidC,user2;vidC,commentU
+IsConnectedTo:user1,commentU
+IsConnectedTo:user2,commentV
+IsConnectedTo:user3,commentZ;user3,commentY;user3,commentX;user3,commentW
+IsConnectedTo:user4,vidD;user4,vidE;user4,vidF;user4,commentT
+IsConnectedTo:commentT,vidB
+

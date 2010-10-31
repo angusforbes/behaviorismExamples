@@ -35,23 +35,23 @@ public class WorldSimpleVideo extends World
   public void setUpWorld()
   {
     setColor(0f, 0f, 0f, 0f);
-    // setColor(1f,1f,1f,1f);
     getState().BLEND = true;
     testSimpleVideo();
   }
 
   public void testSimpleVideo()
   {
-  log.entry("in testSimpleVideo()");
-    System.err.println("in tsv");
+    log.entry("in testSimpleVideo()");
+
     //set up timing...
     long base = nowPlusMillis(3000L);
 
     //set up grid of photos...
     int cols = 3;
     int rows = 3;
+
     //TextureVideo vid = new TextureVideo(FileUtils.toURI("data/videos/sheep.mov"));
-    TextureVideo vid2 = new TextureVideo(FileUtils.toURI("data/videos/mitchell.flv"));
+    TextureVideo vid2 = new TextureVideo(FileUtils.toURI("resources/data/videos/testvid.flv"));
     TextureManager.getInstance().addTexture(vid2);
    // TextureVideo vid3 = new TextureVideo(FileUtils.toURI("data/videos/sheep.mov"));
    // TextureVideo vid4 = new TextureVideo(FileUtils.toURI("data/videos/sheep.mov"));
