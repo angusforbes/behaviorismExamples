@@ -1,0 +1,7 @@
+Term:Spintronics
+Definition:Spintronics is an interdisciplinary science that examines the properties of magnetics and metals
+IsConnectedTo:playerFert
+IsConnectedTo:playerGrunberg
+IsConnectedTo:year1988
+
+
