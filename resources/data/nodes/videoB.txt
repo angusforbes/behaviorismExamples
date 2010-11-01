@@ -1,3 +1,0 @@
-Title:My Favorite Video
-URL:http://www.youtube.com/fredvids/01011.flv
-IsConnectedTo:commentX,.444;user2,-.333;commentY,-1

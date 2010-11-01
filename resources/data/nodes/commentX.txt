@@ -1,3 +1,0 @@
-IsConnectedTo:videoB
-IsConnectedTo:user1
-Comment:I loved this video! I really did!

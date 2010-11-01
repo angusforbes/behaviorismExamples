@@ -1,6 +1,0 @@
-Name:Peter Grunberg
-IsConnectedTo:factGmrDiscovery
-IsConnectedTo:termSpintronics
-IsConnectedTo:playerFert
-
-

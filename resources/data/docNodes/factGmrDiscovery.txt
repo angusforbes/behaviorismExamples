@@ -1,6 +1,0 @@
-Fact:Grunberg and Fert independently discovered that tiny changes in magnetism can produce unexpectedly strong electrical signals
-IsConnectedTo:playerFert
-IsConnectedTo:playerGrunberg
-IsConnectedTo:termSpintronics
-#IsConnectedTo:year1988
-
